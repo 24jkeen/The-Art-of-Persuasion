@@ -1,1 +1,15 @@
 \section{Notes on literature}
+\subsection{Combining Opinion Pooling and Evidential Updating for Multi-Agent Consensus\cite{Lee2017CombiningConsensus}}
+
+Each agent k has a `belief' in a hypothesis $\mathcal{H_1}$. This belief can be summed across all agents and weighted according to how important each agent's opinion is. This pools the belief in each hypothesis. There are a number of schemes for pooling, each with specific strengths and weaknesses. This paper makes use of an oracle, here a character that understands all the hypotheses and beliefs of the agents. The view of this oracle is modelled in a Bayesian way. 
+
+This paper proposes a number of polling methods. Each of them has been simulated and shows that pooling opinions can decrease the time taken to reach a consensus for specific ranges of parameters. It also mentions that the way evidence is fed into this system can impact the parameters needed. For example, if very little evidence is added to the system, it may be beneficial to have the agents reach consensus quite quickly, whereas if lots of conflicting evidence is added to the system it may be better to slow down the opinion pooling
+
+I wonder if this paper is more geared towards arriving at consensus than persuasion. However it does have useful methods for transmission of opinions and their update rules. 
+
+\subsection{Can the Evidence for Explanatory Reasoning
+Be Explained Away?\cite{Zadeh1986ACombination}}
+
+This paper is essentially a review of a paper published by Costello and Watts. Their paper suggests that human belief updates approximately match standard probability theory (with noise). In this paper, the author reviews Costello and Watts' work and concludes that the evidence does not directly support their hypothesis meaning that modelling human beliefs and their updates as Bayesian may not be as accurate as Costello et al were claiming. This does not make it impossible that beliefs could be modelled as such, only that Costello and Watts were flawed.
+
+This paper serves to make me uncertain as to whether one can model beliefs of humans as probability distributions following certain update rules. This raises the question of whether we could and / or should be modelling an agents belief as such. Currently, it is a design decision that has been made by many in the area (citation) and requires further reading to establish whether it is valid to update simulated beliefs using Bayes rule or any probability theory.
