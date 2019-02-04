@@ -1,0 +1,48 @@
+
+
+\begin{align*}
+    <\mathbf{x_1, x_2, x_3 ... x_N}> \\
+    <\mathbf{x_1, y_2, x_3 ... x_N}> \\
+\end{align*}
+
+\subsection*{Update Rule}
+
+
+\[ \mathbf{y_2} =  \begin{cases} 
+      \mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A}) & P(A) \leq \lambda \\
+      \mathbf{x_2} & otherwise 
+   \end{cases}
+\]
+
+Approximate peicewise function with 
+\begin{equation*}
+    \mathbf{y_2} = \omega \cdot (\mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A})) + (1 - \omega) \cdot \mathbf{x_2}
+\end{equation*}
+
+where 
+
+\begin{equation*}
+    \omega =  \lim_{\epsilon \to 0}  \frac{1}{2} \left( 1 + tanh \left( \frac{P(\mathbf{A}) + \lambda}{\epsilon}  \right) \right)
+\end{equation*}
+
+\subsection*{Fixed Points}
+
+\begin{align*}
+    \mathbf{y_2} &= \mathbf{x_2}\\
+    \mathbf{x_2} &= \omega \cdot (\mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A})) + (1 - \omega) \cdot \mathbf{x_2}\\
+    \mathbf{x_2} - (1 - \omega) \cdot \mathbf{x_2} &= \omega \cdot (\mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A}))\\
+    \omega \cdot \mathbf{x_2} &= \omega \cdot (\mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A}))\\
+    0 &= \omega \cdot (\mathbf{x_2} - (\mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A}))) \\
+\end{align*}
+
+So either
+
+\begin{align*}
+    \omega = 0 \quad or \quad \mathbf{x_2} = \mathbf{x_2} \cdot \alpha + (1 - \alpha) \cdot P( \mathbf{x_2} | \mathbf{A})
+\end{align*}
+
+First example:
+
+\begin{equation*}
+    \omega =  \lim_{\epsilon \to 0}  \frac{1}{2} \left( 1 + tanh \left( \frac{P(\mathbf{A}) + \lambda}{\epsilon}  \right) \right) = 0
+\end{equation*}
