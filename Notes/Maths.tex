@@ -46,3 +46,56 @@ First example:
 \begin{equation*}
     \omega =  \lim_{\epsilon \to 0}  \frac{1}{2} \left( 1 + tanh \left( \frac{P(\mathbf{A}) + \lambda}{\epsilon}  \right) \right) = 0
 \end{equation*}
+
+Second example:
+
+\begin{align*}
+    \mathbf{x}_2 &= \mathbf{x}_2 \cdot \alpha + (1 - \alpha) \cdot P(\cdot | \mathbf{A}) \\
+    \mathbf{x}_2 &= \mathbf{x}_2 \cdot \alpha + (1 - \alpha) \cdot \frac{\mathbf{A} \odot \mathbf{x}_2}{\mathbf{A} \cdot \mathbf{x}_2}\\
+    \mathbf{x}_2 (1 - \alpha ) &= (1 - \alpha) \cdot \frac{\mathbf{A} \odot \mathbf{x}_2}{\mathbf{A} \cdot \mathbf{x}_2}\\
+\end{align*}
+If $\alpha \neq 1$:
+
+\begin{align*}
+    \mathbf{x}_2 &= \frac{\mathbf{A} \odot \mathbf{x}_2}{\mathbf{A} \cdot \mathbf{x}_2}\\
+\end{align*}
+
+So for a fixed point we know that $\mathbf{A}$ must contain at least all the states of the world for which the listening agent has some probability. 
+
+
+Stability in maps
+
+\begin{align*}
+    \frac{d \mathbf{y}_2}{d \mathbf{x}_2} &= \alpha \cdot \mathbf{1} + (1 - \alpha) \cdot \frac{d \frac{\mathbf{A} \odot \mathbf{x}_2}{\mathbf{A} \cdot \mathbf{x}_2}}{d \mathbf{x}_2}
+\end{align*}
+
+Focusing on the last derivative:
+\begin{align*}
+    \frac{d \frac{\mathbf{A} \odot \mathbf{x}_2}{\mathbf{A} \cdot \mathbf{x}_2}}{d \mathbf{x}_2} &= \mathbf{A} \odot \mathbf{x}_2 \cdot \frac{d \frac{1}{\mathbf{A} \cdot \mathbf{x}_2}}{d \mathbf{x}_2} + \frac{1}{\mathbf{A} \cdot \mathbf{x}_2} \cdot \frac{d \mathbf{A} \odot \mathbf{x}_2}{d \mathbf{x}_2}  \\
+    &= \mathbf{A} \odot \mathbf{x}_2 \cdot - \frac{\mathbf{A}}{(\mathbf{A} \cdot \mathbf{x}_2)^2} + \frac{1}{\mathbf{A} \cdot \mathbf{x}_2} \cdot \mathbf{A} \\
+    &= \frac{\mathbf{A}}{\mathbf{A} \cdot \mathbf{x}_2} \left(  \mathbf{A} - \frac{\mathbf{A} \odot \mathbf{x}_2}{\mathbf{A} \cdot \mathbf{x}_2}  \right)
+\end{align*}
+
+
+At our fixed point defined above:
+
+\begin{align*}
+    \frac{\mathbf{A}}{\mathbf{A} \cdot \mathbf{x}_2} \left(  \mathbf{A} - \mathbf{x}_2  \right)
+\end{align*}
+
+So we can drop that into the above stability equation:
+
+\begin{align*}
+    \frac{d \mathbf{y}_2}{d \mathbf{x}_2} &= \alpha \cdot \mathbf{1} + (1 - \alpha) \cdot  \frac{\mathbf{A}}{\mathbf{A} \cdot \mathbf{x}_2} \left(  \mathbf{A} - \mathbf{x}_2  \right)\\
+    \frac{d \mathbf{y}_2}{d \mathbf{x}_2} &= \alpha \cdot \mathbf{1} + (1 - \alpha) \cdot  \mathbf{A} \left(  \mathbf{A} - \mathbf{x}_2  \right)
+\end{align*}
+
+In the case where $\mathbf{x}_2 = < \frac{1}{k}, \frac{1}{k},\frac{1}{k}, ... , 0, 0 >$ where $k$ is the number of non-zero beliefs, 
+
+\begin{align*}
+    |\frac{d \mathbf{y}_2}{d \mathbf{x}_2}| &= |\alpha \cdot \mathbf{1} + (1 - \alpha) \cdot  \mathbf{A} \left(  \mathbf{A} - \mathbf{x}_2  \right)| \\
+    &= \sqrt{ \sum_i^n  (\alpha  + (1 - \alpha) \cdot A_i \left( A_i - {x_2}_i  \right))^2 } \\
+    &= \sqrt{ \sum_i^n  \left(\alpha  + (1 - \alpha) \cdot \left( 1 - \frac{1}{k}  \right) \right)^2 }\\ 
+    &= \sqrt{ \sum_i^n  \alpha^2  + 2 \alpha \cdot (1-\alpha) \cdot  \left( 1 - \frac{1}{k}  \right) + (1 - \alpha)^2 \cdot \left( 1 - \frac{1}{k}  \right)^2}\\ 
+    &= \sqrt{ \sum_i^n  \alpha^2 + \left( 2\alpha - 2  \right)  }
+\end{align*}
