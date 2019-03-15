@@ -1,6 +1,6 @@
 \subsection{Bottom Up Model}
 
-Rather than revealing the exact nature of the speakers beliefs, the second approach aims to force the speaker to assert absolute statements while being unable to assert things that it does not have sufficient probability in, prohibiting lying. For example, rather than asserting "$S_1$ is 20\% likely. $S_2$ is 40\% likely. $S_3$ is 40\% likely.", the agent will instead broadcast "Either $S_2$ or $S_3$ is true". In this model, the criterion for a state $S_i$ to be included in the assertion is that the agent has a probability $p_i$ in the corresponding state that is above a threshold $\gamma$. Formally, this can be written as 
+Rather than revealing the exact nature of the speakers beliefs, the second approach aims to force the speaker to assert absolute statements while being unable to assert things that it does not have sufficient probability in, prohibiting misinformation. For example, rather than asserting "$S_1$ is 20\% likely. $S_2$ is 40\% likely. $S_3$ is 40\% likely.", the agent will instead broadcast "Either $S_2$ or $S_3$ is true". In this model, the criterion for a state $S_i$ to be included in the assertion is that the agent has a probability $p_i$ in the corresponding state that is above a threshold $\gamma$. Formally, this can be written as 
 
 \begin{equation}\label{eq:BU_approach}
     \mathbf{A} = \{  S_i : p_i > \gamma\}. 
@@ -18,6 +18,4 @@ where
      P(\mathbf{\cdot} | \mathbf{A}_S) = \frac{\mathbf{A} \odot \mathbf{P}_L}{\mathbf{A} \cdot \mathbf{P}_L}
 \end{equation}
 
-and $\odot$ is the element-wise, or Hadamard product. This has the effect of conditioning the listener's beliefs on the new information being provided by the speaker, allowing the listener to interpret the assertion based on its prior beliefs. It is important to note that $\mathbf{A}$ is a set of states of the world and so can also be represented as a column vector of 1's and 0's. 
-
-
+and $\odot$ is the element-wise, or Hadamard product. This has the effect of conditioning the listener's beliefs on the new information being provided by the speaker, allowing the listener to interpret the assertion based on its prior beliefs. It is important to note that $\mathbf{A}$ is a set of states of the world but can also be represented as a column vector of 1's and 0's. 
