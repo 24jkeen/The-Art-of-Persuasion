@@ -1,10 +1,10 @@
-\section{Extensions}
+\chapter{Extensions}
 
-\subsection{Evidence} \label{sect:evidence}
+\section{The Introduction of Evidence} \label{sect:evidence}
 
-In work many studies on the area of multiagent communication models, there exists a ``true state'' of the world that the agents must confer in order to agree upon. Here we will explore the effects of including such a feature. Firstly, we arbitrarily assign one state of the world to be ``true''. Then at each iteration the simulation conducts $K$ Bernoulli trials with probability $\pi$ in order to establish which agents in the population will receive some evidence. Secondly, there is a chance $c$ that the evidence is accurate. This can be thought of as an agent querying an external, inaccurate oracle. Here, the oracle returns an argument of the same form as $\mathbf{A}$ that is incorporated into an agents beliefs as described in~\cref{eq:BU_update_rule}. 
+In many studies of multi-agent communication, there exists a ``true state'' of the world that the agents must agree upon. Here, we will explore the effects of including such a state as well as evidence in support of it. We arbitrarily assign one state of the world to be ``true''. At each iteration, a subset of the population is selected to receive evidence. This is done by conducting $K$ Bernoulli trials, with probability $\pi$. There is also a chance $c$ that the evidence is accurate. This can be thought of as an agent querying an external, fallible oracle. Here, the oracle returns a singleton set, containing a single element that is only partially accurate. This assertion is then incorporated into the agent's beliefs as in~\cref{eq:BU_update_rule}
 
-One might expect the introduction of this true state to sway the agents towards the true state of the world when $c > 0.5, \pi > 0$, an observation supported by~\cref{fig:evidence}. In this figure, the true state of the world is rotated on the $2,000^{\textnormal{th}},5,000^{\textnormal{th}},10,000^{\textnormal{th}} $ and $ 20,000^{\textnormal{th}}$ iterations. \cref{fig:evidence_deviation} shows the average J-Divergence between the true state of the world and each agent at each timestep, referred to as the deviation. 
+It is expected that the introduction of this evidence will sway the agents towards the true state of the world when $c > \frac{1}{n}, \pi > 0$, an expectation supported by~\cref{fig:evidence}. In this figure, the true state of the world is rotated on the $2,000^{\textnormal{th}},5,000^{\textnormal{th}},10,000^{\textnormal{th}} $ and $ 20,000^{\textnormal{th}}$ iterations. \cref{fig:evidence_deviation} shows the average J-Divergence between the true state of the world and each agent at each time step, referred to as the deviation. 
 
 
 \begin{figure}[H]
@@ -18,46 +18,56 @@ One might expect the introduction of this true state to sway the agents towards 
     \includegraphics[width=\textwidth]{Images/Figures/Evidence/J-DivGood.png}
     \caption{Deviation} \label{fig:evidence_deviation}
  \end{subfigure}
- \caption{Two plots showing entropy and J-Divergence over $25,000$ iterations for the Open, Bottom Up, Top Down and Optimised models, with simple listeners. At the $2,000^{\textnormal{th}},5,000^{\textnormal{th}},10,000^{\textnormal{th}} $ and $ 20,000^{\textnormal{th}} $, the true state of the world is switched to be $H_{i+1}$, highlighted by the jumps in deviation between the true state and each agent.}\label{fig:evidence}
+ \caption{Two plots to show the change in entropy and deviation from the true state over time, for the Open, Bottom Up, Top Down, and Optimised models. These plots were obtained using Passive listeners, and were averaged over $100$ runs. Here, $\pi = 0.001, c=0.9$. At the $2,000^{\textnormal{th}},5,000^{\textnormal{th}},10,000^{\textnormal{th}} $ and $ 20,000^{\textnormal{th}} $, the true state of the world $H_j$ is switched to be $H_{j+1}$, highlighted by the jumps in deviation between the true state and each agent.}\label{fig:evidence}
 \end{figure}
 
-It can be seen in this figure that the Open model has higher entropy on average than the other models, as described above, but that they cluster together slightly quicker that the rest. When the true state changes, all the models recover, updating their beliefs toward the true state as they receive more and more evidence in its favour, however, it can be seen that the Open model, on average gets the population closer to the true state. Consider an agent $i$ that is undecided between two states, with a set of beliefs $P_{i} = [0.4, 0.6, 0]$. Now, let the true state be $H_1$, which the majority of the population believes to be the most credible state, including the listener. If agent $i$ is selected to speak as a Bottom Up agent, it will simply assert $H_2$, whereas, if it is speaking as an Open agent, it will assert $[0.4, 0.6, 0]$. It is clear that the absolute nature of the first assertion will cause a larger update in the listener, updating it away from the true state. This process will balance with the rate at which inaccurate evidence is received accounting for the difference between the deviation of the Open and other models.
+It can be clearly seen that the entropy in the Open model is significantly higher than the rest of the models. Recalling the results of~\cref{sect:analysis}, this is not unexpected. The agents in the Open model cluster together, forming a group in the centre of the simplex. With probability $\pi$, an agent is selected to receive evidence, therefore leaving the main group. Each time such an agent is selected as speaker while outside the group, the centroid of the population moves toward it. When both $\pi$ and $c$ are sufficiently large, this moves the entire population toward the true state. It is apparent that the Open model has the smallest deviation of any of the models, as shown in~\cref{fig:evidence_deviation}. The other three models behave similarly in these plots. At first sight, this does not seem to make sense in conjunction with the highest entropy value on the plot. However, agents in the other three models have a tendency to lie along the edges of the simplex, for which entropy values are low, whereas the Open model rarely reaches these extremities. Instead, agents in the Open model move cohesively in the direction of the true state, getting all the agents close, yielding a small deviation. Conversely, the other models achieve large numbers of agents with strong beliefs in a subset of the possible worlds, that are not as close to the true state as the Open model. 
+
+Another factor in favour of the Open model in this paradigm is that the magnitude of its updates is much smaller than the other models. Consider an agent $x$, such that $\underline{\mathbf{P}}^t_x = [0.4, 0.6, 0]^T$. This agent is undecided between two states, with a slight preference for $H_2$. In this example, let the rest of the population be almost certain in the true state, $H_1$. If $x$ is selected as speaker in the Bottom Up, Top Down, or Optimised model, it is likely that it will assert $\mathbf{A} = \{ H_2 \}$. In this case, the listener agent will update $\approx \alpha$ toward $H_2$, as in~\cref{fig:sierpinski_triangle_intro}. However, if $x$ is an Open agent, it broadcasts its beliefs, causing the listener to update only $\approx \frac{\alpha}{2}$ towards $H_2$. This means that the Open model is slightly slower to react, but much more robust to changes, inexorably updating towards the true state.  
+
+When the true state of the world is rotated, all models recover, with the agents quickly re-converging to the true state. This change in the true state corresponds with the vertical sections of~\cref{fig:evidence_deviation}. This recovery is only possible for agents that have not reached certainty in a single state. Once an agents beliefs $\underline{\mathbf{P}}_x^t = [1,0,0]^T$ it is impossible to persuade them to alter their opinions. In simulation, this the true state to remain the same for many thousands of iterations, depending on $\pi$ and $c$. 
 
 
-\subsection{Reconstructive}
+\section{Method for the Reconstruction of an Agent's Beliefs}
 
-One of the assumptions made in the above models is that the agents have perfect information, an attribute that only the Optimised model makes full use of. In this model, the speaker creates the argument that will cause the listener to update their beliefs to be as close as possible to the speaker. To do that, the speaker must inspect the exact nature of the listeners beliefs, which it can do due to its perfect information. However, this is highly unrealistic, as it is rare that any agent will not only be so open and well understood. To weaken this assumption we can attempt to reconstruct the listeners beliefs based on their previous assertions.
+In this Optimised model, it is assumed that the agents have access to perfect information about the nature of the listener's beliefs before they make an assertion. In this model, the speaker creates the argument that will cause the listener to update their beliefs to be as close as possible to the speaker. The complete understanding of the way in which the listener will react is highly unrealistic, as it is rare that any agent would be so open or predictable. To weaken this assumption it is possible to reconstruct the listener's beliefs based on their previous assertions as speaker.
 
-Let each agent in the population keep a record of the last $\zeta$ assertions the speaker has made in the set $\mathbf{A}_\zeta$. It is likely that these assertions will reflect an agents set of beliefs in aggregate. Hence, the speaker takes an average of the last $\zeta$ assertions by the listener to approximate their beliefs at the current timestep, renormalising it to be a probability distribution. This approximation takes the form
+Let each agent in the population keep a record of the last $\zeta$ assertions that each speaker has made in the set $\mathbf{A}_\zeta$. It is likely that the average of these assertions will reflect an agent's underlying set of beliefs. Hence, the speaker takes an average of the last $\zeta$ assertions by the listener to approximate their beliefs at the current time step, re-normalising it to be a probability distribution. This approximation takes the form
 
 \begin{equation} \label{eq:reconstructive}
-    \hat{P}_{Li} = \frac{\abs{ \{H_i: H_i \in \mathbf{A}_\zeta \} } }{ \sum_j^n \abs{ \{ H_j; H_j \in \mathbf{A}_\zeta \} }   }
+    \hat{p}_{l,j} = \frac{\abs{ \{H_j: H_j \in \mathbf{A}_\zeta \} } }{ \sum_k^n \abs{ \{ H_k; H_k \in \mathbf{A}_\zeta \} }   }
 \end{equation}
 
-\Cref{fig:reconstructive}
+\Cref{fig:reconstructive} shows a comparison between the standard Optimised model with perfect information and with reconstructed information. 
 
 
 \begin{figure}[H]
  \centering
   \begin{subfigure}[ht]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{Images/Figures/Reconstructive/Entropy_reconstruct.png}
+    \includegraphics[width=\textwidth]{Images/Figures/Reconstructive/Entropy_reconstruct_better.png}
     \caption{Entropy}
  \end{subfigure}
  \hfill
  \begin{subfigure}[ht]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{Images/Figures/Reconstructive/J-Div_reconstruct.png}
+    \includegraphics[width=\textwidth]{Images/Figures/Reconstructive/J-Div_reconstruct_better.png}
     \caption{J-Divergence}
  \end{subfigure}
- \caption{Two plots showing entropy and J-Divergence over time for the Optimised and Reconstructive models, with simple listeners. \textit{Computed using $K = 100, n=3, \alpha = 0.5, \zeta = 10$}}\label{fig:reconstructive}
+ \caption{Two plots to show the change in entropy and J-Divergence over time, for the Optimised model with perfect information and reconstructed information at $\zeta = 10$. These plots were obtained using Passive listeners, and were averaged over $100$ runs.}\label{fig:reconstructive}
 \end{figure}
 
+This shows that the reconstructive model almost immediately achieves a consensus in a single state of the world. This behaviour is highly consistent, as shown by the narrow error bars. However, the Optimised model with perfect information again underperforms. The J-Divergence decreases to $0$ suggesting that the agents do reach a consensus, however, the consensus appears to be in an uncertain distribution. It is likely that the width of the error bars in the entropy plot is due to the Optimised model again converging to a vertex in one of the sub-triangles of~\cref{fig:chaos_game}. 
+
+It is interesting to note that the error between the listener's beliefs and the speaker's approximation decreases to $0$. This is intuitive, as once an agent is highly confident in a single state, it will likely assert that single state alone. Thus the approximation will become based on the repeated assertion of a single state, decreasing to $0$ as the system converges. 
+
+These results show that the Optimised model is an insufficient method for achieving consensus with perfect information, however, with approximate information, it quickly converges to a certain consensus. 
 
 
-\subsection{Population Tests}
 
-In Economics, agents can be assigned a variety of different trading strategies, with the aim of making deals that maximise the agents profit. The earliest mechanisms proposed were rudimentary, such as ZI-U and ZI-C~\cite{Gode1993AllocativeRationality}, with later models incorporated machine learning techniques to improve their performance, such as ZI-P, GDX and AA~\cite{CliffMinimal-IntelligenceEnvironments, GjerstadPriceAuctions, Vytelingum2006TheAuction}. \cite{Vach2015ComparisonAgents} provides an excellent comparison of the dynamics of having a population of agents practising different strategies, pursuing the same goal, inspiring the following analysis. In order to determining the most persuasive argumentation strategy, we must maintain a record of the J-Divergence of an agent before and after it receives an argument from a particular type of agent. This indicates the amount of movement in the population each strategy can claim responsibility for. Furthermore, different concentrations of each strategy should be considered, as, in Vach's work, some strategies perform best when in a minority. 
+\section{Mixed Populations Tests} \label{sect:pop_tests}
 
-The following table shows the mean and variance of the J-Divergence, summed for each agent across $5,000$ iterations for a population of $100$ agents mixed to the corresponding concentrations. It also shows the fraction of those $1,000$ runs that was ``won'' by each strategy, the victors shown in bold. 
+In Economics, agents can be assigned a variety of different trading strategies, with the aim of making deals that maximise the agent's profit. The earliest strategies proposed were rudimentary, such as ZI-U and ZI-C~\cite{Gode1993AllocativeRationality}, with later models incorporating machine learning techniques to improve their performance, such as ZI-P, GDX and AA~\cite{Cliff1997Minimal-IntelligenceEnvironments, Gjerstad1998PriceAuctions, Vytelingum2006TheAuction}. \cite{Vach2015ComparisonAgents} provides an excellent comparison of the performance of these strategies when tested against each other in various concentrations. This analysis inspires the following analysis. In order to determine the most persuasive argumentation strategy, two different speaker models can be included in the same population. A record is kept of the change in J-Divergence that is attributed to arguments created by both models, and the ``victor'' is the model that accounts for the greatest change in J-Divergence after $5,000$ iterations. Furthermore, different concentrations of each strategy should be considered, as, in Vach's work, some strategies perform best when in a minority. 
+
+The following table shows the mean and standard deviation of the J-Divergence, summed for the model of each speaker across $5,000$ iterations for a population of $100$ agents mixed to the corresponding concentrations. It also shows the fraction of those $1,000$ runs that was ``won'' by each strategy. The victors are shown in bold. It is important to note that these experiments assume each interaction between a speaker and listener to be independent, such that the order in which agents attempt to persuade each other is unimportant. This is the ``well-stirred'' assumption~\cite{Parker2009CooperativeProblem}. 
 
 \begin{table}[H]
 \begin{adjustbox}{max width = \textwidth}
@@ -65,28 +75,25 @@ The following table shows the mean and variance of the J-Divergence, summed for 
  &  & Open & Bottom Up & Open & Top Down & Open & Optimised & Bottom Up & Top Down & Bottom Up & Optimised & Top Down & Optimised \\ \hline \hline
 \multirow{3}{*}{1:5} & Wins & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} \\
  & Mean & 102.62 & 556.77 & 266.24 & 310.25 & 32.71 & 461.35 & 116.48 & 572.93 & 98.44 & 559.44 & 114.65 & 537.71 \\
- & Variance & 1148.21 & 33438.32 & 6921.15 & 9352.62 & 109.91 & 27371.37 & 1392.15 & 31723.34 & 976.91 & 28583.10 & 1172.33 & 25994.92 \\ \hline
+ & Standard Deviation & 33.89 & 182.86 & 83.19 & 96.71 & 10.48 & 165.44 & 37.39 & 178.11 & 976.91 & 169.07 & 34.24 & 161.23 \\ \hline
 \multirow{3}{*}{2:4} & Wins & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} \\
  & Mean & 195.84 & 434.74 & 196.56 & 439.31 & 63.32 & 301.55 & 237.99 & 465.36 & 197.7 & 459.79 & 235.58 & 573.71 \\
- & Variance & 3854.64 & 19181.86 & 3813.80 & 18625.79 & 471.60 & 14043.25 & 5053.55 & 31723.34 & 4233.75 & 19309.38 & 1172.33 & 17252.55 \\ \hline
+ & Standard Deviation & 62.09 & 138.50 & 61.76 & 136.48 & 21.72 & 118.50 & 71.09 & 178.11 & 65.07 & 138.96 & 34.24 & 131.35 \\ \hline
 \multirow{3}{*}{3:3} & Wins & 15 & \textbf{985} & 2 & \textbf{998} & 0 & \textbf{1000} & \textbf{763} & 237 & 0 & \textbf{1000} & 25 & \textbf{975} \\
  & Mean & 259.22 & 298.03 & 268.98 & 313.77 & 91.57 & 191.49 & 340.28 & 328.92 & 300.58 & 357.97 & 345.47 & 377.57 \\
- & Variance & 7659.79 & 10325.40 & 7443.46 & 10013.92 & 1033.30 & 5834.30 & 12284.39 & 11320.51 & 10007.85 & 10921.99 & 11334.45 & 10525.32 \\ \hline
+ & Standard Deviation & 87.52 & 101.61 & 86.28 & 100.07 & 33.15 & 76.38 & 110.83 & 106.40 & 100.03 & 104.51 & 106.46 & 102.59 \\ \hline
 \multirow{3}{*}{4:2} & Wins & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{757} & 243 & \textbf{1000} & 0 & \textbf{997} & 3 & \textbf{1000} & 0 \\
  & Mean & 275.46 & 168.0 & 296.03 & 186.38 & 114.61 & 109.65 & 470.81 & 223.92 & 421.71 & 256.17 & 471.36 & 267.90 \\
- & Variance & 10258.49 & 4066.55 & 10228.22 & 4070.70 & 1515.69 & 1834.65 & 20385.43 & 4530.30 & 18896.96 & 4640.16 & 18313.40 & 4027.28 \\ \hline
-\multirow{3}{*}{5:1} & Wins & 10 & \textbf{990} & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 \\
- & Mean & 261.47 & 300.25 & 242.22 & 76.76 & 125.61 & 50.62 & 571.24 & 109.50 & 541.02 & 139.20 & 585.96 & 143.79 \\
- & Variance & 7698.04 & 10595.29 & 7969.72 & 850.05 & 1640.94 & 386.30 & 32849.13 & 1223.31 & 31937.07 & 1127.97 & 29570.50 & 996.34
+ & Standard Deviation & 101.28 & 63.77 & 101.13 & 63.80 & 38.93 & 42.83 & 142.78 & 67.31 & 137.47 & 68.12 & 135.33 & 63.46 \\ \hline
+\multirow{3}{*}{5:1} & Wins & \textbf{789} & 211 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 & \textbf{1000} & 0 \\
+ & Mean & 261.47 & 256.25 & 242.22 & 76.76 & 125.61 & 50.62 & 571.24 & 109.50 & 541.02 & 139.20 & 585.96 & 143.79 \\
+ & Standard Deviation & 87.74 & 97.96 & 89.27 & 29.16 & 40.51 & 19.65 & 181.24 & 33.52 & 178.71 & 33.59 & 171.96 & 31.57
 \end{tabular}
 \end{adjustbox}
-\caption{Table to show results of mixing different persuasion strategies together in different concentrations, with simple listeners. The victor of the majority of the $1,000$ games is shown in bold, alongside the mean and variance J-Divergence each strategy is responsible for. }
+\caption{Table to show results of mixing different persuasion strategies together in different concentrations, with Passive listeners. The victor of the majority of the $1,000$ games is shown in bold, alongside the mean and standard deviation J-Divergence each strategy is responsible for. }
 \end{table}
 
 
-The results of this experiment are much as one would expect, showing that, in almost all cases, the agent in the majority is responsible for the most movement in the population. However, there are some cases where the strategy is not universally superior, for instance, the Open vs Optimised games with a $4:2$ concentration shows the Optimised solution winning $24.3 \%$ of the time. This shows the limitations of the Open model, as demonstrated in~\cref{sect:evidence}, with its more diluted arguments limiting the potency of the argument. Another remarkable observation is the result of the Open vs Bottom Up game with a $5:1$ concentration. 
-\todo{I have no idea why this happened}
+The results of this experiment are much as one would expect, showing that, in almost all cases, the agent in the majority is responsible for the most movement in the population. However, there are some cases where a strategy underperforms. For instance, the Open vs Optimised games with a $4:2$ concentration show the Optimised solution winning $24.3 \%$ of the time. This highlights the limitations of the Open model, as demonstrated in~\cref{sect:evidence}, with its more diluted arguments limiting the potency of the argument. Another remarkable observation is the result of the Open vs Bottom Up game with a $5:1$ concentration. This is unexpected and the reasons for it are unclear. It is unlikely to be anomalous as the system was run for $1,000$ games. It is possible that testing other similar concentrations might reveal a trend, though, at present, none is apparent.
 
-It can also be seen that the Optimised model appears to dominate the balanced group tests, only losing $25$ games to the Top Down model. This suggests that its ability to assert anything it must to change the listener's beliefs toward the speaker causes a large amount of movement in the population, at least during the first $5,000$ iterations. 
-
-In these tests, some differences between the Top Down and Bottom Up models can be seen. 
+It can also be seen that the Optimised model appears to dominate the balanced group tests at concentrations $3:3$, only losing $25$ games to the Top Down model. This suggests that its ability to assert anything it must to change the listener's beliefs causes a large amount of movement in the population, at least during the first $5,000$ iterations. The same $3:3$ tests also show minor differences between the Bottom Up and Top Down models. When competing directly, the Bottom Up strategy appears to be more persuasive, winning the $3:3$ contests by a clear margin, though their mean movement is similar when performing in the same concentrations. For instance, in the $1:5$ test, the Top Down model caused approximately the same degree of movement as the Bottom Up caused in the $1:5$. 

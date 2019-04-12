@@ -1,3 +1,21 @@
-\section{Conclusions}
+\chapter{Conclusions}
 
-\subsection{Further Work}
+While previous protocols for the combination of beliefs in multi-agent systems have produced effective tools for reaching a global consensus in the population, they are unrefined, with agents communicating the exact nature of their beliefs. The models in~\cref{sect:speaker_models} demonstrate a variety of different convergent behaviours. It has been demonstrated both analytically and numerically that the populations of Bottom Up and Top Down agents converge to a consensus in a single state of the world, when the listeners are Passive. These models behave similarly, though the Top Down model produces more consistent convergent behaviour as $\gamma$ is varied. The introduction of listeners capable of disregarding information they deem unlikely divides the population. Local consensuses form in opposing, single states of the world, with listeners unable to accept an argument from an agent they do not already agree with. 
+
+The Open and Optimised models are impractical for the purposes of achieving a global consensus. Though the population does form a consensus, it is not in any one state of the world. Instead, the agents cluster together no more confident in one state than another. The Optimised approach is impractical for two reasons. Firstly, the assumption of perfect information is unlikely to be realistic. Secondly, populations of agents practising the Optimised approach regularly converge to uncertain beliefs and remain there. This is a result of their unwillingness to make an assertion that will persuade the listener to update to be further away from the speaker. Interestingly, when the Optimised model uses reconstructed information, it rapidly converges to a practical consensus. Furthermore, the persuasive power demonstrated by the Optimised Model in~\cref{sect:pop_tests} highlights the dangers of ``dark side'' technologies. 
+
+When agents have the power to disregard information they deem unlikely, populations of Bottom Up or Top Down agents no longer reliably form a global consensus. The ability to ignore incredible information polarises the population, forming distinct local consensuses that are unable to communicate with agents that they do not already agree with. This does lead to more rapid convergence than simply using Passive listeners, but fails to create consensus in a single state. Finally, when the Bottom Up and Top Down models are applied to Acclimatising listeners, the convergence is even more rapid as agents quickly become unwilling to alter their beliefs, no matter how persuasive the argument may be. Similar to the Optimised model, this can lead to consensus in a single state, but regularly only achieves local consensus, often with agents few agents uncertain between two conflicting states, uncertain of which to believe. 
+
+All the models in this research show aptitude for different tasks. The Open model is the quickest to converge and the most robust to adapt to evidence it receives though it does not reach certainty in a single state. The Bottom Up model causes a slightly greater affective change than the Top Down approach, however, the Top Down approach is a more robust model, functioning well for a wide variety of parameters. Finally, the Optimised model is powerful though impractical, converging quickly though failing to produce a global consensus in a single possible state of the world. 
+
+
+\section{Further Work}
+
+The analysis in~\cref{sect:analysis} explores the effects of varying a single parameter $\gamma$. However, it would be interesting to explore the impact of varying both $\gamma$ and $\alpha$ simultaneously. This might highlight the particularly strong performance of models when parameter values are at their most extreme.
+
+Similar to the Acclimatisation model, further functions for the value of $\alpha$ could demonstrate interesting behaviour. For instance, if $\alpha$ was given by the cosine similarity between the assertion and the listeners beliefs, or, as in~\cite{Hegselmann2002OpinionSimulation}, the listener's perceived reliability of the speaker. 
+
+Further work could also be conducted incorporating aspects of the Peripheral Route of the ELM, such as the mood of the listener, or the fact that, when an agent feels they are being persuaded, they are harder to convince. Alternatively, strategies in which the speaker targeted particularly influential listeners could be explored, potentially applying elements of Machine Learning to do so.
+
+This research area is young and full of potential, therefore there are likely many further avenues worth investigating. These are but a few. 
+

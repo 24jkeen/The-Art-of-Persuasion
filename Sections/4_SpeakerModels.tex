@@ -1,87 +1,85 @@
-\subsection{Communicator behaviours in collective decision-making} \label{sect:speaker_models}
-\lhead{\textit{Speaker Models}}
+\section{Speaker behaviours in collective decision-making} \label{sect:speaker_models}
+
+In the design of the models that follow, it is important to consider the ethics behind Captology, the study of persuasive technologies~\cite{Atkinson2006Captology:Review}. For instance, it is clearly unethical for a persuasive technology to incite an individual to violence. The work of \cite{Berdichievsky1999TowardsTechnology} provides a preliminary set of rules that such a technology should abide by. Chief among them is the so-called ``Golden Rule'', stating that ``The creators of a persuasive technology should never seek to persuade a person or persons of something they themselves would not consent to be persuaded to do''. Further rules outline the requirement that the technology does not deceive in order to achieve its attempt at persuasion~\cite{Calvo2014TheComputing}. The following models describe agents that are only capable of creating an argument that they themselves believe to be credible, with the exception of the final model. This model is a ``dark side'' example, designed to explore the effects of removing this inhibition~\cite{Berdichievsky1999TowardsTechnology}.
 
 \subsection*{Open Model}
 
-The argument $\mathbf{A}$ that the speaker defines should reflect the underlying set of beliefs in the agent and also produce the desired reaction from the listener~\cite{Lewis2002ConventionStudy}. Since the goal of the speaker is to bring listeners around to its set of beliefs, an intuitive approach might be to simply transmit a complete representation of their set of beliefs at time $t$ to the listener. This requires the speaker to be totally open about the nature of its beliefs, and including them in as an argument  
+The assertion that the speaker selects should reflect the underlying set of beliefs in the agent and also produce the desired reaction from the listener~\cite{Lewis2002Convention:Study}. The goal of the speaker is to align the listener's beliefs more closely with its own. The previous approaches to this problem have been to transmit a complete representation of the speaker's set of beliefs at time $t$~\cite{Degroot1974ReachingConsensus, Lee2018CombiningConsensus, Friedkin1999SocialChange, Hegselmann2002OpinionSimulation}. This requires the speaker to be totally open about the nature of its beliefs, broadcasting  $\underline{\mathbf{P}}_{s}^t$, where $s$ is the index of the speaker. Here, the assertion takes the form of an $n$-dimensional vector of values in the interval $[0,1]$ that sum to $1$, given by
 
+\begin{center}
 \begin{equation}
-    \mathbf{A} = P_{S}^t
+\underline{\mathbf{P}}^t_s = \begin{bmatrix} p_{s, 1}\\ p_{s, 2}\\ \vdots \\ p_{s, n} \end{bmatrix}.
 \end{equation}
+\end{center}
 
-where $S$ is the index of the speaker. Evidently, this assertion takes the form of an $n$-dimensional vector of numbers on the interval $[0,1]$ that sum to $1$. Consequentially, it is intuitive that a combination of such vectors is unlikely to result in an agent that is any more certain in a single state of the world than they were before. This shall be explored in~\cref{sect:analysis}. One benefit of this model is that it is highly transparent, allowing an observer to precisely track the beliefs of the population as they evolve. 
+
+The dynamics of the Open model are explored in~\cref{sect:analysis}. One benefit of this model is that it is highly transparent, allowing an observer to precisely track the population's beliefs as they evolve. 
 
 
 \subsection*{Bottom Up Model}
 
-The models hereafter are less revealing, allowing the speaker to communicate a set of worlds it believes to be possible, rather than its distribution over them. Consider \cref{fig:hesse}. An agent practising the Bottom Up approach, as intimated by the name, defines its assertion by considering the bottom layer of the Hasse diagram. Any state $j$ for which the agent $i$ has sufficiently high probability $P_{i,j}$ is included in the assertion. More formally, 
+The models hereafter are less revealing, allowing the speaker to assert a set of states, rather than a probability vector over all of them. This approach mirrors the finding that, in humans, a person often prefers to receive absolute information, instead of the uncertainties involved. For instance, when a patient receives a serious diagnosis, they are likely to prefer hearing an unambiguous statement, rather than the probability that it is true~\cite{Fischhoff1982LayRisk}. Consider \cref{fig:hesse}. An agent practising the Bottom Up approach, as intimated, defines its assertion by considering the bottom layer of the Hasse diagram. Any state $H_j$ for which the speaker $s$ has sufficiently high probability $p_{i,j}$ is included in the assertion, similar to the so-called Principal Principle~\cite{IgorDouven2006AssertionCredibility, Lewis1980AChance}. More formally, 
 
 \begin{equation}
-    \mathbf{A} = \{ H_j: P_{ij} > \gamma  \}
+    \mathbf{A} = \{ H_j: p_{i,j} > \gamma  \},
 \end{equation}
 
-where $H_j$ represents the $j^{\textnormal{th}}$ state of the world and $\gamma$ is a threshold on the interval $[0,1]$ constant for all agents. Practically, $\mathbf{A}$ can be viewed as a $1 \times n$ binary membership vector given by applying an indicator function to the asserted set. This model shields the internal beliefs of the speaker while only allowing it to put forward assertions it believes to be true to a certain level. It should be noted, however, that for values of $\gamma > 0.5$, the speaker can only assert a set containing only one element, hereafter referred to as a singleton. This is the most precise assertion that can be made as both $\emptyset$ and $W$ reveal nothing as it is equivalent to arguing ``I believe nothing to be true'' or ``I believe the true state to be possible'', neither of which contribute anything new to a discussion. 
+where $H_j$ represents the $j^{\textnormal{th}}$ state of the world and $\gamma$ is a threshold in the interval $[0,1]$ consistent across all agents. Practically, $\mathbf{A}$ can be viewed as a $1 \times n$ binary membership vector given by applying an indicator function to the asserted set, and in this vector form, is notated as $\underline{\mathbf{A}}$. This model shields the internal beliefs of the speaker while only allowing it to put forward assertions it believes to be true above a certain level. It should be noted, however, that for values of $\gamma > 0.5$, the speaker can only assert a singleton set containing one element. This is the most precise assertion that can be made. Furthermore, the assertion of both $\emptyset$ and $\mathbf{W}$ reveal nothing, as these are equivalent to arguing ``I believe nothing to be true'' or ``I believe the true state to be possible'', neither of which contribute anything new to a discussion. 
 
 An interesting feature of this model is that, for $\gamma > \frac{1}{n}$, a region of probability space exists in which it is not possible for an agent to create a meaningful assertion. Take, for example, $\gamma = 0.4, n=3$. It is possible that there exists an agent at time $t$ that is selected as speaker with a set of beliefs
 
 \begin{center}
     
-$P^t_L = \begin{bmatrix}
+$\underline{\mathbf{P}}^t_s = \begin{bmatrix}
     0.35\\
     0.35\\
     0.3
 \end{bmatrix}.$
 \end{center}
 
-This can create possible distributions of the population for which the agents are incapable of speech, creating a mute population necessarily at a steady state. 
+In this particular example, it is impossible for the agent to assert anything, as no $p_{s,j}$ is greater than $\gamma$. This can result in distributions of the population where the agents are incapable of speech, creating a mute population at a steady state by definition. 
 
 \subsection*{Top Down Model}
 
-As its name suggests, the following model adopts an opposite approach to the Bottom Up method. In this example, the agent constructs its argument starting from the top of \cref{fig:hesse}, iteratively whittling away elements of the set $\mathbf{W} = \{H_1, H_2, \dots, H_n  \}$ for which the probability is lowest. The agent will compute its own probability in the argument $\mathbf{A}$ by summing the probabilities of the states within the set. If this sum is above a threshold $\gamma$ then the agent will broadcast the argument. Otherwise it will remove the element which associated with the minimum probability in its set of beliefs. \Cref{alg:TD} outlines the methodology in more detail. This approach can be written as
+As opposed to the Bottom Up model, this method constructs  assertions starting from the top of~\cref{fig:hesse}. Here, the agent iteratively eliminates elements of the set $\mathbf{W} = \{H_1, H_2, \dots, H_n  \}$ for which the probability value $p_{s,j}$ is lowest. The agent will compute its own probability in the argument $\mathbf{A}$ by summing the probabilities of the states within the set. If this sum is above a threshold $\gamma$ then the agent will broadcast the argument. Otherwise, it will remove the element associated with the minimum probability in its set of beliefs. \Cref{alg:TD} outlines the methodology in more detail. This approach can be written as
 
 
 \begin{equation}
     \mathbf{A} = \{ H_j: P(\mathbf{H}) > \gamma  \},
 \end{equation}
 
-where $\gamma$ is again a threshold kept constant across all agents, $H_j$ is the $j^{\textnormal{th}}$ possible state of the world, and $P(\mathbf{H})$ is the probability of the set of states $\mathbf{H}$, where $\mathbf{H}$ is obtained by the method described above.
+where $\gamma$ is again a threshold kept consistent across all agents, $H_j$ is the $j^{\textnormal{th}}$ possible state of the world, and $P(\mathbf{H})$ is the probability of the set of states $\mathbf{H}$, where $\mathbf{H}$ is obtained by the method described in~\cref{alg:TD}.
+
+This method aims to reduce the assertion $\mathbf{A}$ to the most precise set of possible states that still seems plausible to the speaker. Therefore, this method only allows the speaker to make an assertion that it believes to be true. However, it is important to note that the significance of $\gamma$ differs between the Bottom Up and the Top Down models. In the former, it is a threshold that only applies to individual states, whereas in the latter, it relates to sets of states. Consequentially, the two models cannot be compared directly for the same value of $\gamma$. \\
 
 \begin{algorithm}[H]
 \SetAlgoLined
-\KwResult{Argument $\mathbf{A}$ }
- $p = P(W)$\;
- $\mathbf{A} = W$\;
- $i=1$\;
- \While{$i < n$}{
-  $S_{min} \gets min(p_i)$\;
-  $\mathbf{A} \gets \mathbf{A} \setminus \{S_{min}\}$\;
-  $p = P(\mathbf{A})$\;
+\KwResult{Assertion $\mathbf{A}$ }
+ \While{$j < n$}{
+  $H_{min} \gets min(\underline{\mathbf{P}}_s)$\;
+  $\mathbf{H} \gets \mathbf{H} \setminus \{H_{min}\}$\;
+  $p \gets P(\mathbf{H})$\;
   \eIf{$p \leq \gamma$}{
+   $\mathbf{A} \gets \mathbf{H}$\;
    return $\mathbf{A}$\;
    }{
-   i++\;
+   j++\;
   }
  }
- return $\mathbf{A}$\;
+ return $\mathbf{H}$\;
  \caption{Top Down Model} \label{alg:TD}
 \end{algorithm}
 
-
-This method aims to whittle the assertion $\mathbf{A}$ down to the most precise set of possible worlds that still seems plausible to the speaker. The speaker can only state things it believes to be true. It is important to note, however, that the significance of $\gamma$ differs between the Top Down and the Bottom Up model. In the latter, it is a threshold that only applies to individual states whereas the former accounts for sets of states instead. This means that care must be taken in making direct comparisons between the models. 
-
-
 \subsection*{Optimised Model}
 
-Thus far, the speakers in previous models have failed to make use of one valuable piece of information. They do not consider the beliefs of the listener in the construction of their arguments. This final model rectifies this lapse. 
+The speakers in previous models have failed to make use of one valuable piece of information. They do not consider the beliefs of the listener in the construction of their assertions. This is addressed in the Optimised model. 
 
-In this world, all agents have perfect information; they know the beliefs of every other agent as well as how they may react to hearing new pieces of information (an assumption that will be altered later). It is therefore practical for the speaker to devise the best possible argument for each and every speaker. The best outcome for the speaker is for the listener to update their set of beliefs to be as close to the speakers' as possible and hence, minimise the J-Divergence between the two. This can be posed as the following unconstrained Integer Programming optimisation problem
+It is assumed that all agents have perfect information; they know the beliefs of every other agent as well as how they might react to hearing new pieces of information. It is therefore feasible for the speaker to devise the best possible argument for each and every listener. The best outcome for the speaker is that the listener updates their set of beliefs to be as close to the speaker's as possible, thus minimising the J-Divergence between the two. This can be posed as the following unconstrained Integer Programming optimisation problem, 
 
 \begin{equation}
-    minimise \hspace{1.2em} z = \frac{1}{2} \left( P^t_S \log \left( \frac{ \frac{1}{2} (P^t_S + P^{t+1}_L(\mathbf{A})) }{P^t_S} \right) +  P^{t+1}_L(\mathbf{A}) \log \left( \frac{ \frac{1}{2} (P^t_S + P^{t+1}_L(\mathbf{A})) }{P^{t+1}_L(\mathbf{A})} \right)     \right),
+    minimise \hspace{1.2em} z = \frac{1}{2} \left( \underline{\mathbf{P}}^t_s \log \left( \frac{ \frac{1}{2} (\underline{\mathbf{P}}^t_s + \underline{\mathbf{P}}^{t+1}_l(\mathbf{A})) }{\underline{\mathbf{P}}^t_s} \right) +  \underline{\mathbf{P}}^{t+1}_l(\mathbf{A}) \log \left( \frac{ \frac{1}{2} (\underline{\mathbf{P}}^t_s + \underline{\mathbf{P}}^{t+1}_l(\mathbf{A})) }{\underline{\mathbf{P}}^{t+1}_l(\mathbf{A})} \right)     \right),
 \end{equation}
 
-where $P_S$ and $P_L$ are the speaker and listeners beliefs respectively and $P_L^{t+1}$ is a function of the argument $\mathbf{A}$ that the speaker broadcasts. This system empowers the speaker to make any argument it needs to in order to convince the listener, regardless of the speakers own opinions. It would be simple to introduce an integrity constraint, restricting the speaker to only arguments it believes itself, but it is worth investigating the effects of allowing an agent total freedom in its arguments. 
-
-
+where $\underline{ \mathbf{P}}_s$ and $\underline{\mathbf{P}}_l$ are the speaker's and listener's beliefs respectively, and $\underline{\mathbf{P}}_l^{t+1}$ is a function of the argument $\mathbf{A}$ that the speaker broadcasts. This system empowers the speaker to make any argument it needs to in order to convince the listener, regardless of the speaker's own opinions. It would be simple to introduce an integrity constraint, restricting the speaker to only assert states that it itself believes. However, it is also interesting to investigate the effects of allowing an agent total freedom in its choice of argument. This is a ``dark side'' experiment, designed to elucidate an ethically questionable option~\cite{Berdichievsky1999TowardsTechnology}. 
 
 

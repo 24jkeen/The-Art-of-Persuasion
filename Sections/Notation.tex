@@ -1,22 +1,57 @@
+\section*{Table of Notation}
 \begin{table}[H]
-\begin{tabular}{c|l}
-Symbol & Meaning \\ \hline
-$H$ & A state of the world \\
-$\hat{E}^t$ & Average entropy in the population at time $t$ \\
-$\hat{J}^t$ & Average J-Divergence in the population at time $t$ \\
-$\eta$ & The threshold that determines convergence \\
-$\gamma$ & The theshold imposed on the speaker to create an argument $[0,1]$ \\
-$\alpha$ & The amount to which an agent is influenced by new information $[0,1]$ \\
-$\epsilon$ & An arbitrarily small non-zero number \\
-$S$ & The agent selected as speaker \\
-$L$ & The agent selected as listener \\
-$P_{i,j}^t$ & An agent $i$'s belief in state $H_j$ at time $t$ \\
-$K$ & The number of agents in the population \\
-$n$ & The number of possible states of the world \\
-$\mathbf{A}$ & The assertion created by the speaker \\
-$t$ & The current timestep \\
-$t_{max}$ & The maximum number of iterations \\
-$\pi$ & The probability of an agent receiving evidence \\
-$c$ & The probability that the evidence received by an agent is accurate\\
+\begin{tabular}{|c|c|l|} \hline
+Symbol & Type &  Meaning \\ \hline \hline
+$S$ & agent & The agent selected as speaker \\
+$L$ & agent & The agent selected as listener\\ 
+$x$ & agent & An agent drawn randomly from the population \\
+$y$ & set of agents & A set of agents selected at random from the population \\ \hline \hline
+
+$s$ & index & The index of the speaker   \\
+$l$ & index & The index of the listener\\
+$i$ & index & The index of an agent\\
+$j$ & index & The index of a state\\
+$t$ & index & The current time step of the system\\  \hline \hline
+
+$n$ & scalar & The number of possible states of the world \\
+$K$ & scalar & The number of agents in a population \\
+$t_{max}$ & scalar & The maximum number of iterations \\
+$T$ & scalar & The number of iterations for convergence \\
+$\eta$ & scalar & The threshold for convergence\\
+$\sigma$ & scalar & The standard deviation \\
+$\gamma$ & scalar & The threshold on the speakers $[0,1]$\\
+$\alpha$ & scalar & The importance of new information an agent receives $[0,1]$ \\
+$\epsilon$ & scalar & An arbitrarily small number \\
+$\tau$ & scalar & The number of arguments an agent has received \\
+$\phi$ & scalar & The rate of acclimatisation \\
+$\pi$ & scalar & The probability of receiving a piece of evidence\\
+$c$ & scalar & The probability a piece of evidence is accurate \\
+$\zeta$ & scalar & The number of arguments used to reconstruct beliefs\\
+$\hat{E}^t$ & scalar & Average entropy of the population at time $t$ \\
+$\hat{J}^t$ & scalar & Average J-Divergence of the population at time $t$ \\
+$\lambda$ & scalar & An eigenvalue of a matrix \\ \hline \hline
+
+
+$\underline{\underline{\mathbf{P}}}^t$ & matrix & A matrix representing the beliefs of each agent at time $t$ \\
+$\underline{\mathbf{P}}^t_i$ & vector & A column vector agent $i$'s beliefs at time $t$\\
+$\hat{p}^t_{x,j}$ & scalar & The approximated probability value of $x$'s belief in $H_j$ \\
+$p_{i,j}$ & scalar & The probability value agent $i$ holds for state $j$\\
+$P_x()$ & function & A function that returns the probability agent $x$ holds for a set of states\\ \hline \hline
+
+$\mathbf{W}$ & set of states & The set of all possible worlds \\
+$\mathbf{H}$ & set of states & A set of possible states \\
+$H_j$ & state & The $J^\textnormal{th}$ possible state of the world \\
+$\mathbf{A}$ & set of states & The set of states that the speaker asserts \\
+$\mathbf{A}_\zeta$ & set of states & A set of the last $\zeta$ states an agent has asserted \\
+$\underline{\mathbf{A}}$ & vector & A binary vector indicating the presence of a state in $\mathbf{A}$ \\ \hline \hline 
+
+
+$\underline{\underline{\mathbf{J}}}$ & matrix & The Jacobian matrix \\
+$\underline{\underline{\mathbf{M}}}$ & matrix & An arbitrary matrix\\ \hline \hline  
+
+$D(c, r)$ & Gershgorin Disc & A Gershgorin Disc centred about $c$ with radius $r$ \\ \hline \hline
+
+
+
 \end{tabular}
 \end{table}
