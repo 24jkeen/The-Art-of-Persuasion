@@ -5,7 +5,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
-% \usepackage{helvet}
+\usepackage[scaled]{helvet}
 \renewcommand{\familydefault}{\sfdefault}
 % Referencing format
 % \usepackage{natbib}
@@ -36,28 +36,28 @@
 % \usepackage[toc,page]{appendix}
 \usepackage{chngpage}
 
-\usepackage{titletoc}
-\titlecontents{chapter}             % Section
-  [0em]                             % Left
-  {\vspace*{\baselineskip}}         % Above code
-  {\bfseries\thecontentslabel\quad} % Numbered format
-  {}                                % Numberless format
-  {\quad\thecontentspage}           % Filler
-  []                                % Separator
-\titlecontents*{section} % Section
-  [0em]                  % Left
-  {\space}               % Above code
-  {\thecontentslabel~}   % Numbered format
-  {}                     % Numberless format
-  {}                     % Filler
-  [.\space]              % Separator
-\titlecontents*{subsection} % Section
-  [0em]                     % Left
-  {\space}                  % Above code
-  {}                        % Numbered format
-  {}                        % Numberless format
-  {}                        % Filler
-  [.\space]                 % Separator
+% \usepackage{titletoc}
+% \titlecontents{chapter}             % Section
+%   [0em]                             % Left
+%   {\vspace*{\baselineskip}}         % Above code
+%   {\bfseries\thecontentslabel\quad} % Numbered format
+%   {}                                % Numberless format
+%   {\quad\thecontentspage}           % Filler
+%   []                                % Separator
+% \titlecontents*{section} % Section
+%   [0em]                  % Left
+%   {\space}               % Above code
+%   {\thecontentslabel~}   % Numbered format
+%   {}                     % Numberless format
+%   {}                     % Filler
+%   [.\space]              % Separator
+% \titlecontents*{subsection} % Section
+%   [0em]                     % Left
+%   {\space}                  % Above code
+%   {}                        % Numbered format
+%   {}                        % Numberless format
+%   {}                        % Filler
+%   [.\space]                 % Separator
 
 
 \usepackage{csquotes}
@@ -80,13 +80,6 @@
 \usepackage{float}
 \usepackage[capitalise, noabbrev]{cleveref}
 \usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[CE,CO]{\leftmark}
-\fancyfoot[LE,RO]{Page \thepage}
-\fancyfoot[RE,LO]{\rightmark}
-\renewcommand{\headrulewidth}{1pt}
-\renewcommand{\footrulewidth}{1pt}
 
 \usepackage{adjustbox}
 \usepackage{multirow}
@@ -122,3 +115,4 @@
 
 \captionsetup{justification=centering}
 
+\renewcommand{\baselinestretch}{1.05}

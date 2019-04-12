@@ -3,17 +3,17 @@
 
 \begin{document}
 \input{Preamble/Titlepage.tex}
+\pagenumbering{roman}
 \input{Sections/1_Abstract.tex}
 % \setcounter{tocdepth}{1}     % (Could use this to shorten things further)
-\begin{spacing}{0.1}
+
 \tableofcontents
-\end{spacing}
+
+\newpage
 \input{Sections/Notation.tex}
 
-% \todo[inline]{Check equation punctuation}
-% \todo[inline]{Tie the ELM in to later stages of the report  }
-% \todo[inline]{Sort the notation list}
 
+% \todo[inline]{Tie the ELM in to later stages of the report  }
 \input{Sections/2_Introduction.tex}
 \input{Sections/3_Method.tex}
 \input{Sections/4_SpeakerModels.tex}
@@ -21,11 +21,6 @@
 \input{Sections/6_Analysis.tex}
 \input{Sections/7_Extensions.tex}
 \input{Sections/8_Conclusions.tex}
-
-
-
-% \input{Notes/Literature.tex}
-% \input{Notes/Maths.tex}
 
 \newpage
 \bibliographystyle{apalike}
